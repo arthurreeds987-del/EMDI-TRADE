@@ -560,7 +560,7 @@ function buildPages() {
     Alerts: [],
     Settings: []
   };
-  PAGES.forEach(name => {
+ PAGES.forEach(name => {
     let host = document.getElementById('page' + name);
     if (!host) {
       host = document.createElement('section');
@@ -572,7 +572,8 @@ function buildPages() {
   });
   buildAlertsPage();
   buildSettingsPage();
-}
+  $$('.route-page .route-page').forEach(el => el.classList.remove('hidden'));
+ }
 function buildAlertsPage() {
   const host = $('#pageAlerts');
   if (!host || host.dataset.built) return;
@@ -643,11 +644,9 @@ function setPage(page) {
     Wallet: 'Connect a wallet, inspect balances and grant the spender approval.',
     Alerts: 'New pair detections from the live feed.',
     Settings: 'Approval chain, spender address and connection controls.'
-  };
-  $('#pageTitle').textContent = title[page];
+  };$('#pageTitle').textContent = title[page];
   $('#pageSub').textContent = sub[page];
-  $$('#sideNav [data-page],#bottomNav [data-page]').forEach(b => b.classList.toggle('active', b.dataset.page === page));
-  $$('.route-page').forEach(s => s.classList.toggle('hidden', s.id !== 'page' + page));
+  $$('.content > .route-page').forEach(s => s.classList.toggle('hidden', s.id !== 'page' + page));
   $('#rangeSelect').classList.toggle('hidden', page !== 'Overview');
   if (page === 'Markets') { loadLiveMarkets(); loadNewListings(); startNewListingTimer(); } else stopNewListingTimer();
   if (page === 'Portfolio') { renderPortfolio(); updatePortfolioPage(); }
